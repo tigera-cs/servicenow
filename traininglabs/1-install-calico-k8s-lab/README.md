@@ -27,9 +27,9 @@ Then clone the repository
 
 Change into the lab directory:
 
-`cd TRAININGWORKBOOKS/1-install-calico-k8s-lab`
+`cd traininglabs/1-install-calico-k8s-lab`
 
-Change `TRAININGWORKBOOKS` to the directory where you have clone the training labs repository.
+Change `traininglabs` to the directory where you have clone the training labs repository.
 
 ## 1.1. Install Calico
 
