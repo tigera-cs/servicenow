@@ -21,9 +21,9 @@ Make sure you are in the righ directory
 
 Then clone the repository
 
-`git clone https://github.com/tigera-cs/l3harris.git TRAININGWORKBOOKS`
+`git clone https://github.com/tigera-cs/servicenow.git traininglabs`
 
-`cd TRAININGWORKBOOKS`
+`cd traininglabs`
 
 Change into the lab directory:
 
