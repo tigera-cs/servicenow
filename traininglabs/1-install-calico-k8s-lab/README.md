@@ -31,15 +31,8 @@ Change into the lab directory:
 
 Change `traininglabs` to the directory where you have clone the training labs repository.
 
-## 1.1. Install Calico
 
-Calico will be the networking (CNI) and network policy implementation throughout your training lab. To install Calico, run the following commands in the terminal window.
-
-**Confirm that all of the pods are running with the following command.**
-
-`watch kubectl get pods -n calico-system`
-
-## 1.2. Launch a sample application (yaobank)
+## 1.1. Launch a sample application (yaobank)
 
 For this lab, we will use a sample application called "Yet Another Online Bank" (yaobank) which consists of 3 microservices.
 1. Customer (which provides a simple web GUI)
@@ -51,7 +44,7 @@ The following diagram shows the logical diagram of the application.
 
 ![yaobank](img/1-yaobank.jpg)
 
-### 1.1. Launch the application using the following commands
+### 1.2. Launch the application using the following commands
 
 ```
 kubectl apply -f ./lab_manifests/1-yaobank.yaml
