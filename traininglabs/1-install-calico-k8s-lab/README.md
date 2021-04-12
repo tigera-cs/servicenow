@@ -1,6 +1,5 @@
 # 1. Lab1: Launch Yaobank app
 
-The first lab guides you through the process of installing Calico and deploying a sample application. 
 
 In this lab, you will:
 1.1. Launch a sample application (Yaobank) 
