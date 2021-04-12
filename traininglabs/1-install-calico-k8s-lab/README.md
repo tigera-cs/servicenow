@@ -35,10 +35,6 @@ Change `traininglabs` to the directory where you have clone the training labs re
 
 Calico will be the networking (CNI) and network policy implementation throughout your training lab. To install Calico, run the following commands in the terminal window.
 
-```
-kubectl create -f ./lab_manifests/1-calico.yaml
-```
-
 **Confirm that all of the pods are running with the following command.**
 
 `watch kubectl get pods -n calico-system`
