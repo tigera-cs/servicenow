@@ -1,4 +1,4 @@
-# 1. Lab1: Installing Calico on K8s
+# 1. Lab1: Launch Yaobank app
 
 The first lab guides you through the process of installing Calico and deploying a sample application. 
 
