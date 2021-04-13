@@ -103,43 +103,43 @@ Considering that you have the cluster running in `ipvs` mode and Calico is now c
 
 ```
 kubectl apply -f - <<EOF
-> apiVersion: apps/v1
-> kind: Deployment
-> metadata:
->   name: nginx-deployment
->   labels:
->     app: nginx
-> spec:
->   replicas: 3
->   selector:
->     matchLabels:
->       app: nginx
->   template:
->     metadata:
->       labels:
->         app: nginx
->     spec:
->       containers:
->       - name: nginx
->         image: nginx:1.14.2
->         ports:
->         - containerPort: 80
-> EOF
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+EOF
 ```
 
 ```
 kubectl apply -f - <<EOF
-> apiVersion: v1
-> kind: Service
-> metadata:
->   name: service-nginx
-> spec:
->   selector:
->     app: nginx
->   ports:
->   - protocol: TCP
->     port: 80
-> EOF
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-nginx
+spec:
+  selector:
+    app: nginx
+  ports:
+  - protocol: TCP
+    port: 80
+EOF
 
 ```
 Examine the ClusterIP of `service-nginx` service
