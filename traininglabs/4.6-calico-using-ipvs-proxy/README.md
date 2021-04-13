@@ -14,16 +14,18 @@ ipvs mode provides greater scale and performance vs iptables mode. However, it c
 
 ```
 # load module <module_name>
-modprobe -- ip_vs
-modprobe -- ip_vs_rr
-modprobe -- ip_vs_wrr
-modprobe -- ip_vs_sh
-modprobe -- nf_conntrack_ipv4
+sudo modprobe ip_vs 
+sudo modprobe ip_vs_rr
+sudo modprobe ip_vs_wrr 
+sudo modprobe ip_vs_sh
+sudo modprobe nf_conntrack
+sudo sysctl --system
+sudo sysctl -p
 
 # to check loaded modules, use
-lsmod | grep -e ip_vs -e nf_conntrack_ipv4
+lsmod | grep -e ip_vs -e nf_conntrack
 # or
-cut -f1 -d " "  /proc/modules | grep -e ip_vs -e nf_conntrack_ipv4
+cut -f1 -d " " /proc/modules | grep -e ip_vs -e nf_conntrack
 ```
 
 
