@@ -10,9 +10,11 @@ ipvs mode provides greater scale and performance vs iptables mode. However, it c
 ## Requirements
 
 1. A cluster running Kubernetes v1.11+
-2. Load the below required kernel modules and install `ipset`
+2. Load the below required kernel modules and install `ipvsadm` and `ipset` on all nodes.
 
 ```
+sudo apt install -y ipvsadm ipset
+
 # load module <module_name>
 sudo modprobe ip_vs 
 sudo modprobe ip_vs_rr
