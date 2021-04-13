@@ -155,7 +155,7 @@ service-nginx   ClusterIP   10.99.170.70   <none>        80/TCP    115m
 Now let us list the ipvs table and check how are service maps to the pods created using deployment. Blow output is trimmed for better understanding.
 
 ```
-ipvsadm -l
+sudo ipvsadm -l
 IP Virtual Server version 1.2.1 (size=4096)
 Prot LocalAddress:Port Scheduler Flags
   -> RemoteAddress:Port           Forward Weight ActiveConn InActConn
@@ -173,7 +173,7 @@ for i in {1..10}; do  curl <service-ip>:80 ; done
 
 In the next tab analyze the packet flow per second using
 
-watch ipvsadm -L -n --rate
+watch sudo ipvsadm -L -n --rate
 
 ```
 Here you will see the traffic getting distributed among the pods using `rr algorithm`
