@@ -71,7 +71,7 @@ kube-system   kube-dns     ClusterIP   10.96.0.10   <none>        53/UDP,53/TCP,
 Following are the IPVS proxy rules for above services
 
 ```
-root@ip-10-0-0-10:~# ipvsadm -ln
+root@ip-10-0-0-10:~# sudo ipvsadm -ln
 IP Virtual Server version 1.2.1 (size=4096)
 Prot LocalAddress:Port Scheduler Flags
   -> RemoteAddress:Port           Forward Weight ActiveConn InActConn
