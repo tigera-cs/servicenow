@@ -53,18 +53,6 @@ kubectl logs kube-proxy-<name> -n kube-system | grep "Using ipvs Proxier"
 ```
 If you are able to find the mentioned String in the logs, IPVS mode is being used by the cluster. You can always see detailed logs for more depth about the IPVS mode.
 
-## Install Calico CNI
-
-There is nothing you need to do in Calico to use IPVS mode; if enabled, the mode is automatically detected. However, if your default Kubernetes NodePort range changes, use the following instructions to update Calico nodeport ranges to stay in sync.
-
-For more details - [Use IPVS kube-proxy](https://docs.projectcalico.org/networking/use-ipvs#how-to)
-
-Use the below command to install CNI
-
-```
-kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
-```
-
 ## Verify and Debug IPVS
 
 Users can use ipvsadm tool to check whether kube-proxy are maintaining IPVS rules correctly. For example, we have the following services in the cluster.
