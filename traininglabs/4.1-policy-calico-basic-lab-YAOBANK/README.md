@@ -35,12 +35,11 @@ kubectl get pod -n yaobank -o wide
 
 ```
 ubuntu@master:~$ kubectl get pod -n yaobank -o wide
-NAME                        READY   STATUS    RESTARTS   AGE    IP             NODE      NOMINATED NODE   READINESS GATES
-customer-747d66f8bf-jhl2l   1/1     Running   0          113s   10.47.2.236    worker1   <none>           <none>
-database-746b78cf85-j28tw   1/1     Running   0          113s   10.48.189.84   worker2   <none>           <none>
-summary-85c56b76d7-2kjzb    1/1     Running   0          113s   10.48.189.85   worker2   <none>           <none>
-summary-85c56b76d7-ngm6t    1/1     Running   0          113s   10.47.2.235    worker1   <none>           <none>
-ubuntu@master:~$ 
+NAME                        READY   STATUS    RESTARTS   AGE   IP            NODE      NOMINATED NODE   READINESS GATES
+customer-747d66f8bf-wfdl5   1/1     Running   0          34s   10.46.0.228   worker1   <none>           <none>
+database-746b78cf85-8g9ch   1/1     Running   0          34s   10.46.1.118   worker2   <none>           <none>
+summary-85c56b76d7-5hbnv    1/1     Running   0          33s   10.46.1.119   worker2   <none>           <none>
+summary-85c56b76d7-crzhc    1/1     Running   0          33s   10.46.1.99    master    <none>           <none>
 ```
 
 ```
@@ -49,11 +48,10 @@ kubectl get svc -n yaobank
 
 ```
 ubuntu@master:~$ kubectl get svc -n yaobank
-NAME       TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
-customer   NodePort    10.49.200.142   <none>        80:30180/TCP   2m7s
-database   ClusterIP   10.49.128.187   <none>        2379/TCP       2m7s
-summary    ClusterIP   10.49.218.181   <none>        80/TCP         2m7s
-ubuntu@master:~$ 
+NAME       TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+customer   NodePort    10.49.25.152   <none>        80:30180/TCP   52s
+database   ClusterIP   10.49.127.6    <none>        2379/TCP       52s
+summary    ClusterIP   10.49.250.81   <none>        80/TCP         52s
 ```
 
 Next, Let's exec into the customer pod and verify connectivity to the summary pod in worker1/2.
@@ -64,10 +62,10 @@ kubectl exec -ti -n yaobank $(kubectl get pod -l app=customer -n yaobank -o name
 
 ```
 kubectl exec -ti -n yaobank $(kubectl get pod -l app=customer -n yaobank -o name) -- bash
-	ping 10.48.189.85
-	ping 10.47.2.235
-	curl -v telnet://10.48.189.85:80
-	curl -v telnet://10.47.2.235:80
+	ping 10.46.1.119
+	ping 10.46.1.99
+	curl -v telnet://10.46.1.119:80
+	curl -v telnet://10.46.1.99:80
 	ping summary
 	curl -v telnet://summary:80
 	exit
