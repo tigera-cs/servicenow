@@ -77,7 +77,7 @@ NAME      ENDPOINTS                          AGE
 summary   10.49.130.128:80,10.49.130.67:80   23h
 ```
 
-The `summary` service has two endpoints (`10.48.0.65` on port `80` AND `10.48.0.67` on port `80` in this example output). Starting from the `KUBE-SERVICES` iptables chain, we will traverse each chain until you get to the rule directing traffic to these endpoint IP addresses.
+The `summary` service has two endpoints (`10.49.130.128` on port `80` AND `10.49.130.67` on port `80` in this example output). Starting from the `KUBE-SERVICES` iptables chain, we will traverse each chain until you get to the rule directing traffic to these endpoint IP addresses.
 
 #### 3.1.2.2. Examine the KUBE-SERVICE chain
 ```
