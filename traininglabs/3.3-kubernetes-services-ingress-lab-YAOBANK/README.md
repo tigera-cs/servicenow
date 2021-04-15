@@ -177,6 +177,7 @@ kubectl get pod -n ingress-nginx -o wide
 
 ```
 ubuntu@master:$ kubectl get pod -n ingress-nginx -o wide
+
 NAME                                        READY   STATUS    RESTARTS   AGE   IP             NODE      NOMINATED NODE   READINESS GATES
 nginx-ingress-controller-7fcb6cffc5-xwskb   1/1     Running   0          47s   10.48.189.67   worker2   <none>           <none>
 ```
