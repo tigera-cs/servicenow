@@ -4,7 +4,7 @@ metadata:
   name: pool1-ipv4-ippool
 spec:
   blockSize: 28
-  cidr: 10.50.0.0/24
+  cidr: 10.46.0.0/24
   ipipMode: Never
   natOutgoing: true
   nodeSelector: all()
@@ -17,7 +17,7 @@ metadata:
   name: pool2-ipv4-ippool
 spec:
   blockSize: 28
-  cidr: 10.50.1.0/24
+  cidr: 10.46.1.0/24
   ipipMode: Never
   natOutgoing: true
   nodeSelector: all()
