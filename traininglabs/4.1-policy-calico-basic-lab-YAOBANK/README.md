@@ -139,7 +139,7 @@ You should have the following behaviour:
 * ping to the pod now fails. This is expected since icmp was not allowed in the policy we have applied.
 * curl to the pod ip is successful
 * ping to summary fails
-* curl to summary is successful
+* curl to summary fails
 
 Let's cleanup the network policy for now.
 
