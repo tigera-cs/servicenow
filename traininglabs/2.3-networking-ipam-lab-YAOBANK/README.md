@@ -194,11 +194,16 @@ Let's first examine the routing table of the worker1 node.
 ```
 ip route
 <----snip----->
-blackhole 10.49.57.64/26 proto bird 
-10.49.57.65 dev calicd5686cd561 scope link 
-blackhole 10.49.185.64/26 proto bird 
-10.49.185.66 dev cali6ef5877c407 scope link 
-10.49.232.64/26 via 10.0.0.12 dev eth0 proto bird 
+blackhole 10.46.0.224/28 proto bird 
+10.46.0.225 dev cali334712b93fc scope link 
+10.46.1.96/28 via 10.0.0.10 dev eth0 proto bird 
+10.46.1.112/28 via 10.0.0.12 dev eth0 proto bird 
+10.47.2.232 dev calia2e3751d843 scope link 
+blackhole 10.47.2.232/29 proto bird 
+10.48.189.64/26 via 10.0.0.12 dev eth0 proto bird 
+10.48.219.64/26 via 10.0.0.10 dev eth0 proto bird 
+10.48.235.128 dev calic1faebfe4cf scope link 
+blackhole 10.48.235.128/26 proto bird 
 ```
 
 Examine the output of the routing table that is relevant to our deployment:
