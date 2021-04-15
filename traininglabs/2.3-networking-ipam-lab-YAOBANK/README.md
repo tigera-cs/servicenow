@@ -41,8 +41,6 @@ Note the relevant information in the manifest:
 * blockSize: used by Calico IPAM to efficiently assign ad BGP advertize ip addresses in blocks. 
 * ipipMode/vxlanMode: to allow or disable ipip and vxlan overlay. options are never, always and crosssubnet
 
-To create new ippools that fall under the k8s cluster CIDR and do not overlap, we create new subnet's into smaller ippools.
-
 
 Examine the content of the manifest `cat ./lab_manifests/2.3-ippools.yaml`
 
@@ -52,8 +50,8 @@ kind: IPPool
 metadata:
   name: pool1-ipv4-ippool
 spec:
-  blockSize: 26
-  cidr: 10.49.0.0/17
+  blockSize: 28
+  cidr: 10.46.0.0/24
   ipipMode: Never
   natOutgoing: true
   nodeSelector: all()
@@ -65,14 +63,13 @@ kind: IPPool
 metadata:
   name: pool2-ipv4-ippool
 spec:
-  blockSize: 26
-  cidr: 10.49.128.0/17
+  blockSize: 28
+  cidr: 110.46.1.0/24
   ipipMode: Never
   natOutgoing: true
   nodeSelector: all()
 ```
 
-You can see that we have effectively broken the default ippool into to equal subnets. 
 Apply the manifest and verify the output.
 
 ```
