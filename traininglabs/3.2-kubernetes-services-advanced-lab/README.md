@@ -34,11 +34,11 @@ NAME                     READY   STATUS    RESTARTS   AGE   IP            NODE  
 nginx-5bccf56c9f-h6k5r   1/1     Running   0          37h   10.47.2.232   worker1   <none>           <none>
 
 ubuntu@master:~$ kubectl get pod -n yaobank -o wide
-NAME                        READY   STATUS    RESTARTS   AGE     IP              NODE      NOMINATED NODE   READINESS GATES
-customer-747d66f8bf-wj6nd   1/1     Running   0          5m7s    10.47.2.236     worker1   <none>           <none>
-database-746b78cf85-5lm5t   1/1     Running   0          4m31s   10.48.189.124   worker2   <none>           <none>
-summary-85c56b76d7-cbhc2    1/1     Running   0          4m27s   10.47.2.237     worker1   <none>           <none>
-summary-85c56b76d7-lh6dx    1/1     Running   0          3m54s   10.48.189.119   worker2   <none>           <none>
+NAME                        READY   STATUS    RESTARTS   AGE   IP            NODE      NOMINATED NODE   READINESS GATES
+customer-746bdb9f6b-2srx5   1/1     Running   0          20m   10.46.0.225   worker1   <none>           <none>
+database-64c799fdd7-h2mh7   1/1     Running   0          20m   10.46.1.114   worker2   <none>           <none>
+summary-c75c4c64c-h7bdw     1/1     Running   0          20m   10.46.1.115   worker2   <none>           <none>
+summary-c75c4c64c-nls7v     1/1     Running   0          19m   10.46.1.97    master    <none>           <none>
 ```
 
 *If you have not done so in lab 2.3, please delete the YAOBANK PODs once, so that they are assigned IPs from the right pool*
@@ -55,11 +55,11 @@ Now run `calicoctl get ippools` to see the IP Pools.
 
 ```
 ubuntu@master:~$ calicoctl get ippools
-NAME                  CIDR             SELECTOR   
-default-ipv4-ippool   10.48.0.0/16     all()      
-external-pool         10.47.2.0/24     all()      
-pool1-ipv4-ippool     10.49.2.0/24     all()      
-pool2-ipv4-ippool     10.49.130.0/24   all()     
+NAME                  CIDR           SELECTOR   
+default-ipv4-ippool   10.48.0.0/16   all()      
+external-pool         10.47.2.0/24   all()      
+pool1-ipv4-ippool     10.46.0.0/24   all()      
+pool2-ipv4-ippool     10.46.1.0/24   all()
 ```
 
 As you can see the PODs is assigned IP address from `external-pool`, `pool1-ipv4-ippool` and `pool2-ipv4-ippool` IP Pools accordingly based on our last few labs.
@@ -82,14 +82,14 @@ ubuntu@ip-10-0-0-20:~$ ip route
 default via 10.0.0.1 dev eth0 proto dhcp src 10.0.0.20 metric 100 
 10.0.0.0/24 dev eth0 proto kernel scope link src 10.0.0.20 
 10.0.0.1 dev eth0 proto dhcp scope link src 10.0.0.20 metric 100 
+10.46.0.224/28 via 10.0.0.11 dev eth0 proto bird 
+10.46.1.96/28 via 10.0.0.10 dev eth0 proto bird 
+10.46.1.112/28 via 10.0.0.12 dev eth0 proto bird 
 10.47.2.232/29 via 10.0.0.11 dev eth0 proto bird 
 10.48.189.64/26 via 10.0.0.12 dev eth0 proto bird 
 10.48.219.64/26 via 10.0.0.10 dev eth0 proto bird 
 10.48.235.128/26 via 10.0.0.11 dev eth0 proto bird 
-10.49.57.64/26 via 10.0.0.11 dev eth0 proto bird 
-10.49.185.64/26 via 10.0.0.11 dev eth0 proto bird 
-10.49.232.64/26 via 10.0.0.12 dev eth0 proto bird 
-172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 linkdown
+172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 linkdown 
 ```
 
 As you can see above the routes learned via BGP ending with `proto bird` prefix are the blocks in which `yaobank` Applications and `nginx` POD are running.
@@ -146,6 +146,9 @@ ip route
 default via 10.0.0.1 dev eth0 proto dhcp src 10.0.0.20 metric 100 
 10.0.0.0/24 dev eth0 proto kernel scope link src 10.0.0.20 
 10.0.0.1 dev eth0 proto dhcp scope link src 10.0.0.20 metric 100 
+10.46.0.224/28 via 10.0.0.11 dev eth0 proto bird 
+10.46.1.96/28 via 10.0.0.10 dev eth0 proto bird 
+10.46.1.112/28 via 10.0.0.12 dev eth0 proto bird 
 10.47.2.232/29 via 10.0.0.11 dev eth0 proto bird 
 10.48.189.64/26 via 10.0.0.12 dev eth0 proto bird 
 10.48.219.64/26 via 10.0.0.10 dev eth0 proto bird 
@@ -154,14 +157,10 @@ default via 10.0.0.1 dev eth0 proto dhcp src 10.0.0.20 metric 100
         nexthop via 10.0.0.10 dev eth0 weight 1 
         nexthop via 10.0.0.11 dev eth0 weight 1 
         nexthop via 10.0.0.12 dev eth0 weight 1 
-10.49.2.64/26 via 10.0.0.11 dev eth0 proto bird 
-10.49.130.64/26 via 10.0.0.12 dev eth0 proto bird 
-10.49.130.128/26 via 10.0.0.11 dev eth0 proto bird 
 10.50.0.0/24 proto bird 
         nexthop via 10.0.0.10 dev eth0 weight 1 
         nexthop via 10.0.0.11 dev eth0 weight 1 
         nexthop via 10.0.0.12 dev eth0 weight 1 
-172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 linkdown
 ```
 You should now see the cluster service cidr `10.49.0.0/16` advertised from each of the kubernetes cluster nodes. This means that traffic to any service's cluster IP address will get load-balanced across all nodes in the cluster by the network using ECMP (Equal Cost Multi Path). Kube-proxy then load balances the cluster IP across the service endpoints (backing pods) in exactly the same way as if a pod had accessed a service via a cluster IP.
 
@@ -179,9 +178,9 @@ Find the cluster IP for the `customer` service.
 kubectl get svc -n yaobank customer
 ```
 ```
-ubuntu@bird:~$ kubectl get svc -n yaobank customer
-NAME       TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
-customer   NodePort   10.49.204.171   <none>        80:30180/TCP   15h
+ubuntu@master:~$ kubectl get svc -n yaobank customer
+NAME       TYPE       CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE
+customer   NodePort   10.49.209.8   <none>        80:30180/TCP   57m
 ```
 In this example output it is `10.49.204.171`. Your IP may be different.
 
@@ -194,7 +193,7 @@ bird
 Confirm you can access it from bird.
 
 ```
-curl 10.49.204.171
+curl 10.49.209.8
 ```
 
 ```
@@ -254,9 +253,9 @@ Find the cluster IP for the `customer` service.
 kubectl get svc -n yaobank customer
 ```
 ```
-ubuntu@bird:~$ kubectl get svc -n yaobank customer
-NAME       TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
-customer   NodePort   10.49.204.171   <none>        80:30180/TCP   15h
+ubuntu@master:~$ kubectl get svc -n yaobank customer
+NAME       TYPE       CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE
+customer   NodePort   10.49.209.8   <none>        80:30180/TCP   58m
 ```
 In this example output it is `10.49.204.171`. Your IP may be different.
 
@@ -274,18 +273,13 @@ ubuntu@ip-10-0-0-20:~$ ip route
 default via 10.0.0.1 dev eth0 proto dhcp src 10.0.0.20 metric 100 
 10.0.0.0/24 dev eth0 proto kernel scope link src 10.0.0.20 
 10.0.0.1 dev eth0 proto dhcp scope link src 10.0.0.20 metric 100 
-10.47.2.232/29 via 10.0.0.11 dev eth0 proto bird 
+10.46.1.112/28 via 10.0.0.12 dev eth0 proto bird 
 10.48.189.64/26 via 10.0.0.12 dev eth0 proto bird 
-10.48.219.64/26 via 10.0.0.10 dev eth0 proto bird 
-10.48.235.128/26 via 10.0.0.11 dev eth0 proto bird 
 10.49.0.0/16 proto bird 
         nexthop via 10.0.0.10 dev eth0 weight 1 
         nexthop via 10.0.0.11 dev eth0 weight 1 
         nexthop via 10.0.0.12 dev eth0 weight 1 
-10.49.2.64/26 via 10.0.0.11 dev eth0 proto bird 
-10.49.130.64/26 via 10.0.0.12 dev eth0 proto bird 
-10.49.130.128/26 via 10.0.0.11 dev eth0 proto bird 
-10.49.204.171 via 10.0.0.11 dev eth0 proto bird
+10.49.209.8 via 10.0.0.11 dev eth0 proto bird 
 10.50.0.0/24 proto bird 
         nexthop via 10.0.0.10 dev eth0 weight 1 
         nexthop via 10.0.0.11 dev eth0 weight 1 
@@ -318,11 +312,11 @@ Before we begin, examine the kubernetes services in the `yaobank` kubernetes nam
 kubectl get svc -n yaobank
 ```
 ```
-ubuntu@bird:~/calico/lab-manifests$ kubectl get svc -n yaobank
+ubuntu@master:~$ kubectl get svc -n yaobank
 NAME       TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
-customer   NodePort    10.49.204.171   <none>        80:30180/TCP   16h
-database   ClusterIP   10.49.131.165   <none>        2379/TCP       16h
-summary    ClusterIP   10.49.153.90    <none>        80/TCP         16h
+customer   NodePort    10.49.209.8     <none>        80:30180/TCP   60m
+database   ClusterIP   10.49.25.37     <none>        2379/TCP       60m
+summary    ClusterIP   10.49.111.226   <none>        80/TCP         60m
 ```
 
 Note that none of them currently have an `EXTERNAL-IP`.
@@ -350,10 +344,12 @@ bird
 ip route
 ```
 ```
-ubuntu@ip-10-0-0-20:~$ ip route
 default via 10.0.0.1 dev eth0 proto dhcp src 10.0.0.20 metric 100 
 10.0.0.0/24 dev eth0 proto kernel scope link src 10.0.0.20 
 10.0.0.1 dev eth0 proto dhcp scope link src 10.0.0.20 metric 100 
+10.46.0.224/28 via 10.0.0.11 dev eth0 proto bird 
+10.46.1.96/28 via 10.0.0.10 dev eth0 proto bird 
+10.46.1.112/28 via 10.0.0.12 dev eth0 proto bird 
 10.47.2.232/29 via 10.0.0.11 dev eth0 proto bird 
 10.48.189.64/26 via 10.0.0.12 dev eth0 proto bird 
 10.48.219.64/26 via 10.0.0.10 dev eth0 proto bird 
@@ -362,10 +358,7 @@ default via 10.0.0.1 dev eth0 proto dhcp src 10.0.0.20 metric 100
         nexthop via 10.0.0.10 dev eth0 weight 1 
         nexthop via 10.0.0.11 dev eth0 weight 1 
         nexthop via 10.0.0.12 dev eth0 weight 1 
-10.49.2.64/26 via 10.0.0.11 dev eth0 proto bird 
-10.49.130.64/26 via 10.0.0.12 dev eth0 proto bird 
-10.49.130.128/26 via 10.0.0.11 dev eth0 proto bird 
-10.49.204.171 via 10.0.0.11 dev eth0 proto bird 
+10.49.209.8 via 10.0.0.11 dev eth0 proto bird 
 10.50.0.0/24 proto bird 
         nexthop via 10.0.0.10 dev eth0 weight 1 
         nexthop via 10.0.0.11 dev eth0 weight 1 
@@ -393,11 +386,11 @@ Examine the services again to validate everything is as expected:
 kubectl get svc -n yaobank
 ```
 ```
-ubuntu@bird:~/calico/lab-manifests$ kubectl get svc -n yaobank
-NAME          TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
-customer      NodePort       10.49.204.171    10.50.0.10    80:30180/TCP   59m
-database      ClusterIP      10.49.252.124   <none>        2379/TCP       59m
-summary       ClusterIP      10.49.163.205   <none>        80/TCP         59m
+ubuntu@master:~$ kubectl get svc -n yaobank
+NAME       TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+customer   NodePort    10.49.209.8     10.50.0.10    80:30180/TCP   62m
+database   ClusterIP   10.49.25.37     <none>        2379/TCP       62m
+summary    ClusterIP   10.49.111.226   <none>        80/TCP         62m
 
 ```
 
