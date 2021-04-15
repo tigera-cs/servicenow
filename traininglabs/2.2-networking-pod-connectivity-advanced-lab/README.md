@@ -222,9 +222,9 @@ The output shows that the nginx pod has an IP address from the externally routab
 
 Try to connect to it from host1. 
 
+
 ```
 bird
-```
 curl 10.47.2.232
 ```
 
