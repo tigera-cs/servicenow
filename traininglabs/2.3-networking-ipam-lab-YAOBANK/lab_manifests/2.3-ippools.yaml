@@ -3,8 +3,8 @@ kind: IPPool
 metadata:
   name: pool1-ipv4-ippool
 spec:
-  blockSize: 26
-  cidr: 10.49.0.0/17
+  blockSize: 28
+  cidr: 10.50.0.0/24
   ipipMode: Never
   natOutgoing: true
   nodeSelector: all()
@@ -16,8 +16,8 @@ kind: IPPool
 metadata:
   name: pool2-ipv4-ippool
 spec:
-  blockSize: 26
-  cidr: 10.49.128.0/17
+  blockSize: 28
+  cidr: 10.50.1.0/24
   ipipMode: Never
   natOutgoing: true
   nodeSelector: all()
