@@ -79,11 +79,11 @@ Successfully applied 2 'IPPool' resource(s)
 
 ```
 calicoctl get ippools
-NAME                  CIDR             SELECTOR   
-default-ipv4-ippool   10.48.0.0/16     all()      
-external-pool         10.47.2.0/24     all()      
-pool1-ipv4-ippool     10.49.0.0/17     all()      
-pool2-ipv4-ippool     10.49.128.0/17   all()    
+NAME                  CIDR           SELECTOR   
+default-ipv4-ippool   10.48.0.0/16   all()      
+external-pool         10.47.2.0/24   all()      
+pool1-ipv4-ippool     10.46.0.0/24   all()      
+pool2-ipv4-ippool     10.46.1.0/24   all()    
 ```
 
 We have now the `pool1-ipv4-ippool` & `pool1-ipv4-ippool' pools to test the ipam address assignment
