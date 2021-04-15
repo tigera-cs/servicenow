@@ -174,11 +174,11 @@ Next, examine the Pods ip address assignment.
 ```
 kubectl get pod -n yaobank -o wide
 
-NAME                        READY   STATUS    RESTARTS   AGE     IP              NODE      NOMINATED NODE   READINESS GATES
-customer-746bdb9f6b-hb85k   1/1     Running   0          9m39s   10.49.2.65      worker1   <none>           <none>
-database-64c799fdd7-98gwt   1/1     Running   0          8m57s   10.49.130.66    worker2   <none>           <none>
-summary-c75c4c64c-l64fk     1/1     Running   0          8m50s   10.49.130.67    worker2   <none>           <none>
-summary-c75c4c64c-z94fx     1/1     Running   0          9m37s   10.49.130.128   worker1   <none>           <none>
+NAME                        READY   STATUS    RESTARTS   AGE     IP            NODE      NOMINATED NODE   READINESS GATES
+customer-746bdb9f6b-2srx5   1/1     Running   0          2m13s   10.46.0.225   worker1   <none>           <none>
+database-64c799fdd7-h2mh7   1/1     Running   0          99s     10.46.1.114   worker2   <none>           <none>
+summary-c75c4c64c-h7bdw     1/1     Running   0          97s     10.46.1.115   worker2   <none>           <none>
+summary-c75c4c64c-nls7v     1/1     Running   0          53s     10.46.1.97    master    <none>           <none>
 
 ```
 You can see that Pod ip address assignment is aligned with the intend defined in the updated manifest, assigning pods of a deployment to the correct ip pool.  Calico IPAM provides the flexibility as well of assigning ippools to namespaces or even in alignment with your topology to specific nodes or racks.
