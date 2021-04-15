@@ -230,7 +230,7 @@ curl 10.47.2.232
 
 This should have succeeded, showing that the nginx pod is directly routable on the broader network.
 
-If you would like to see IP allocation stats from Calico-IPAM, run the following command.
+If you would like to see IP allocation stats from Calico-IPAM, run the following command from the master.
 
 ```
 calicoctl ipam show
