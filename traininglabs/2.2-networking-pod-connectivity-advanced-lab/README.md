@@ -220,7 +220,10 @@ nginx-7bb7cd8db5-zqzks   1/1     Running   0          5m44s   10.47.2.232   work
 
 The output shows that the nginx pod has an IP address from the externally routable IP Pool.
 
-Try to connect to it from host1:
+Try to connect to it from host1. 
+
+```
+bird
 ```
 curl 10.47.2.232
 ```
